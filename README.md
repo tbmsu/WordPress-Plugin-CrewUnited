@@ -1,6 +1,6 @@
 # Crew United WP
 
-This plugin adds a shortcode to your Wordpress blog that allows you to embed parts of your public Crew United profile. It makes use if the profile XML the Crew United site creates. You can find the URL of your profile XML in the sidebar of your Crew United profile.
+This plugin adds a shortcode to your WordPress blog that allows you to embed parts of your public Crew United profile. It makes use if the profile XML the Crew United site creates. You can find the URL of your profile XML in the sidebar of your Crew United profile.
 
 ## Contents
 
@@ -15,14 +15,14 @@ The WordPress Plugin Crew United WP includes the following files:
 The current version of the Crew United WP shortcode embeds the following content in your site:
 
 * Projects as [department]
-** all your projects you participated in this department
-** following infos per project are displayed
-*** *year* of participation
-*** *title* of the production (can be the working title)
-*** *movie type*
-*** *head of* head of the department/director
+    * all your projects you participated in this department
+    * following infos per project are displayed
+        * __year__ of participation
+        * __title__ of the production (can be the working title)
+        * __movie type__
+        * __head of__ head of the department/director
 
-The rendered HTML structure is as follows, so you can use a style for class `cuwp-box`and its child elements.
+The rendered HTML structure is as follows, so you can use styles for the class `cuwp-box`and its child elements.
 
 ```html
 <div class="cuwp-box">
@@ -30,14 +30,14 @@ The rendered HTML structure is as follows, so you can use a style for class `cuw
     <table>
         <thead>
             <tr>
-                <td>`...`</td>
-                `...`
+                <td>...</td>
+                ...
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td>`...`</td>
-                `...`
+                <td>...</td>
+                ...
             </tr>
         </tbody>
     </table>
@@ -46,7 +46,7 @@ The rendered HTML structure is as follows, so you can use a style for class `cuw
 
 ## Installation
 
-Just copy the folder `wp-creunited`to your WordPress plugin directory, probably unter `wp-content/plugins/`. After that go to the admin site of your WordPress installation and activate the plugin. That's all, now you can use the new shortcode.
+Just copy the folder `wp-crewunited`to your WordPress plugin directory, probably unter `~/wp-content/plugins/`. After that go to the admin site of your WordPress installation and activate the plugin. That's all, now you can use the new shortcode.
 
 ## Usage
 
