@@ -26,6 +26,7 @@ The rendered HTML structure is as follows, so you can use styles for the class `
 
 ```html
 <div class="cuwp-box">
+
     <!-- Begin Department Navigation (optional), set 'deptNav="true"' -->
     <nav>
         <a href="#department">...</a>
@@ -43,7 +44,7 @@ The rendered HTML structure is as follows, so you can use styles for the class `
         </thead>
         <tbody>
             <tr>
-                <!-- one row per project -->
+                <!-- one row per project, limit rows by setting 'maxProfiles="n"' -->
                 <td>...</td>
                 ...
             </tr>
@@ -54,6 +55,7 @@ The rendered HTML structure is as follows, so you can use styles for the class `
     <!-- Begin Profile Link (optional), set 'profileLink="true"' -->
     <p class="profile-link">Visit my profile on <a href="...">Crew United</a></p>
     <!-- End Profile Link -->
+
 </div>
 ```
 
@@ -69,13 +71,13 @@ Place the following shortcode in the editor or text widget:
 
 ### Options
 
-`src` (__required__): the URL to your Crew United profile XML, e.g. `src="http://xml.crew-united.com/Profilansichten/XmlGenerator.asp?get=xxxxxxxxxxxx"`
+* `src` (__required__): the URL to your Crew United profile XML, e.g. `src="http://xml.crew-united.com/Profilansichten/XmlGenerator.asp?get=xxxxxxxxxxxx"`
 
-`maxProjects`(optional): if this value is greater than 0, the amount of projects displayed per department is limited to this value, e.g. `maxProjects="10"`
+* `maxProjects` (optional): if this value is greater than 0, the amount of projects displayed per department is limited to this value, e.g. `maxProjects="10"`
 
-`deptNav`(optional): adds a navigation to your departments, e.g. `deptNav="true"`
+* `deptNav` (optional): adds a navigation to your departments, e.g. `deptNav="true"`
 
-`profileLink` (optional): displays a link to your profile on Crew United if set to _true_, e.g. `profileLink="false"`
+* `profileLink` (optional): displays a link to your profile on Crew United if set to _true_, e.g. `profileLink="false"`
 
 
 ## Contact
