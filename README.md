@@ -26,6 +26,13 @@ The rendered HTML structure is as follows, so you can use styles for the class `
 
 ```html
 <div class="cuwp-box">
+    <!-- Begin Department Navigation (optional), set 'deptNav="true"' -->
+    <nav>
+        <a href="#department">...</a>
+    </nav>
+    <!-- End Department Navigation -->
+
+    <!-- Begin Repeat per Department -->
     <h3>{Department}</h3>
     <table>
         <thead>
@@ -36,11 +43,17 @@ The rendered HTML structure is as follows, so you can use styles for the class `
         </thead>
         <tbody>
             <tr>
+                <!-- one row per project -->
                 <td>...</td>
                 ...
             </tr>
         </tbody>
     </table>
+    <!-- End Repeat -->
+
+    <!-- Begin Profile Link (optional), set 'profileLink="true"' -->
+    <p class="profile-link">Visit my profile on <a href="...">Crew United</a></p>
+    <!-- End Profile Link -->
 </div>
 ```
 
@@ -52,13 +65,18 @@ Just copy the folder `wp-crewunited`to your WordPress plugin directory, probably
 
 Place the following shortcode in the editor or text widget:
 
-`[cuwp src="<URL of profile XML"]`
+`[cuwp src="<URL of profile XML>"]`
 
 ### Options
 
-So far, the shortcode takes only one option.
+`src` (__required__): the URL to your Crew United profile XML, e.g. `src="http://xml.crew-united.com/Profilansichten/XmlGenerator.asp?get=xxxxxxxxxxxx"`
 
-`src` (required): the URL to your Crew United profile XML, e.g. http://xml.crew-united.com/Profilansichten/XmlGenerator.asp?get=xxxxxxxxxxxx
+`maxProjects`(optional): if this value is greater than 0, the amount of projects displayed per department is limited to this value, e.g. `maxProjects="10"`
+
+`deptNav`(optional): adds a navigation to your departments, e.g. `deptNav="true"`
+
+`profileLink` (optional): displays a link to your profile on Crew United if set to _true_, e.g. `profileLink="false"`
+
 
 ## Contact
 

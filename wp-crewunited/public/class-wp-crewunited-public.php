@@ -112,10 +112,16 @@ class WP_CrewUnited_Public {
 		 */
         function cuwp_shortcode($atts = [], $content = null, $tag = '') {
 
+			if (is_admin()) return;
+
 			/**
 			 * Helper function that is responsible for loading and parsing the XML.
 			 */
-			function loadParseCrewXml( $src ) {
+			function loadParseCrewXml( $src, $maxProjects, $deptNav, $showProfileLink ) {
+
+				function helperGetCrewProfileLink($xml) {
+					return $xml->MemberProfile->Contacts->CrewUnitedLink->English;
+				}
 
 				function helperGetDepartment($pBlock) {
 					return $pBlock->Department->NameEnglish;
@@ -156,14 +162,19 @@ class WP_CrewUnited_Public {
 
 				if ('' == $src) return 'no source provided, can\'t load anything...';
 		
-				$xml = simplexml_load_file($src) or die("Error: Cannot create object");
+				$xml = simplexml_load_file($src) or die("Error: Cannot create XML object from source");
 
 				/**
-				 * Project Blocks
+				 * Departments (Project Blocks)
 				 */
-				foreach($xml->MemberProfile->Projects->children() as $pBlock) { 
-					
-					$out .= '<h3>' . helperGetDepartment($pBlock[0]) . '</h3>';
+				$pBlocks = [];
+				$deptIndex = 0;
+				foreach($xml->MemberProfile->Projects->children() as $pBlock) {
+
+					$department = helperGetDepartment($pBlock[0]);
+					array_push($pBlocks, $department);
+
+					$out .= '<h3 id="cuwp-department-' . $deptIndex++ .'">' . $department . '</h3>';
 
 					/**
 					 * Projects within Project Block
@@ -179,6 +190,7 @@ class WP_CrewUnited_Public {
 					$out .= '</tr>';
 					$out .= '</thead>';
 					$out .= '<tbody>';
+					$pCount = 0;
 					foreach($pBlock[0]->SelectedProjects->children() as $project) { 
 						$out .= '<tr>';
 						$out .= '<td>' . $project[0]->ParticipationYear . '</td>';
@@ -187,10 +199,31 @@ class WP_CrewUnited_Public {
 						$out .= '<td>' . helperGetHeadOf($project[0]) . '</td>';
 						$out .= '<td>' . helperGetComment($project[0]) . '</td>';
 						$out .= '<tr>';
+						if (0 < $maxProjects && ++$pCount == $maxProjects) break;
 					}
 					$out .= '</tbody>';
 					$out .= '</table>';
-				} 
+				}
+				
+				if ($deptNav){
+					$navOut = '<nav>';
+					$deptIndex = 0;
+					foreach($pBlocks as $pBlock) {
+						$navOut .= '<a href="#cuwp-department-' . $deptIndex++ . '">' . $pBlock . '</a>';
+					}
+
+					$navOut .= '</nav>';
+
+					$out = $navOut . $out;	
+				}
+
+				if ($showProfileLink) {
+					$out .= '<p class="profile-link">' 
+						. 'Visit my profile on <a href="'
+						. helperGetCrewProfileLink($xml)
+						. '" target="_blank">Crew United</a>' 
+						. '</p>';
+				}
 
 				return $out;
 			}
@@ -205,18 +238,32 @@ class WP_CrewUnited_Public {
             // override default attributes with user attributes
             $cuwp_atts = shortcode_atts([
                 'title' => 'Crew United WP',
-                'src' => '',
+				'src' => '',
+				'maxprojects' => 0,
+				'deptnav' => 'false',
+				'profilelink' => 'true'
 			], $atts, $tag);
 			
 			$src = esc_html__($cuwp_atts['src'], 'cuwp');
+			$maxProjects = intval(esc_html__($cuwp_atts['maxprojects'], 'cuwp'));
+			$deptNav = esc_html__($cuwp_atts['deptnav'], 'cuwp') == 'true'
+				? true
+				: false;
+			$showProfileLink = esc_html__($cuwp_atts['profilelink'], 'cuwp') == 'true'
+				? true
+				: false;
 
             $out = '';
             $out .= '<div class="cuwp-box">';
-            $out .= loadParseCrewXml($src);
+            $out .= loadParseCrewXml($src, $maxProjects, $deptNav, $showProfileLink);
 			$out .= '</div>';
     
             // always return
             return $out;
+		}
+
+		if ( shortcode_exists( 'cuwp' ) ) {
+			die("Crew United WP: The shortcode [cuwp] already exists. Please uninstall the plugin 'Crew United WP' :(");
 		}
 
 		add_shortcode('cuwp', 'cuwp_shortcode');
