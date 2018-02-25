@@ -138,10 +138,10 @@ class WP_CrewUnited_Public {
 				}
 
 				function helperGetTitle($project) {
-					if($project->ProjectTitle->InternationalTitle != '')
-						return $project->ProjectTitle->InternationalTitle;
-					else if($project->ProjectTitle->OfficialTitleGerman != '')
+					if($project->ProjectTitle->OfficialTitleGerman != '')
 						return $project->ProjectTitle->OfficialTitleGerman;
+					else if($project->ProjectTitle->InternationalTitle != '')
+						return $project->ProjectTitle->InternationalTitle;
 					else 
 						return $project->ProjectTitle->WorkingTitle;
 				}
@@ -184,7 +184,7 @@ class WP_CrewUnited_Public {
 					$out .= '<tr>';
 					$out .= '<th>Year</th>';
 					$out .= '<th>Title</th>';
-					$out .= '<th>Movie Type</th>';
+					$out .= '<th>Genre</th>';
 					$out .= '<th>' . helperGetHeadOfHeader($pBlock[0]) . '</th>';
 					$out .= '<th>Comment</th>';
 					$out .= '</tr>';
